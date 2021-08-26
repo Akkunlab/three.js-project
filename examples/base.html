@@ -12,20 +12,28 @@
   <script type="module">
     import * as THREE from 'https://cdn.skypack.dev/three@0.131.3';
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let cube;
 
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
 
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-    camera.position.z = 5;
+      // 立方体を作成
+      const geometry = new THREE.BoxGeometry();
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+    }
 
+    /* Three.js: アニメーション */
     const animate = () => {
       requestAnimationFrame(animate);
     
@@ -35,7 +43,9 @@
       renderer.render(scene, camera);
     };
 
+    initThree();
     animate();
+
   </script>
 </body>
 
