@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>stars</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
+
+<body>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.131.3';
+
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let points;
+
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000010);
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 500, 2000);
+      camera.position.z = 1000;
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      createObjects();
+    }
+
+    /* Three.js: オブジェクト作成 */
+    const createObjects = () => {
+      const particles = 10000;
+      const geometry = new THREE.BufferGeometry();
+      const positions = [];
+      const colors = [];
+      const color = new THREE.Color();
+      const n = 3000, n2 = n / 2;
+
+      for (let i = 0; i < particles; i++) {
+        const x = Math.random() * n - n2;
+        const y = Math.random() * n - n2;
+        const z = Math.random() * n - n2;
+        positions.push(x, y, z);
+
+        const vx = Math.random() * 0.3 + 0.7;
+        const vy = Math.random() * 0.3 + 0.7;
+        const vz = 1;
+        color.setRGB(vx, vy, vz);
+      
+        colors.push(color.r, color.g, color.b);
+      }
+
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+      geometry.computeBoundingSphere();
+
+      const material = new THREE.PointsMaterial({ size: 3, vertexColors: true});
+      points = new THREE.Points(geometry, material);
+      scene.add(points);
+    }
+
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+    
+			scene.rotation.y += 0.0001;
+    
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+			camera.aspect = window.innerWidth / window.innerHeight;
+			camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+		}
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
+
+</html>
