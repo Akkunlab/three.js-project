@@ -34,48 +34,48 @@
     const createObjects = () => {
 
       // 直方体
-      const boxGeometry = new THREE.BoxGeometry(10, 10, 10); // (幅, 高さ, 奥行き, 幅分割数, 高さ分割数, 奥行き, 分割数)
+      const boxGeometry = new THREE.BoxBufferGeometry(10, 10, 10); // (幅, 高さ, 奥行き, 幅分割数, 高さ分割数, 奥行き, 分割数)
       const boxMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
       box = new THREE.Mesh(boxGeometry, boxMaterial);
       box.position.set(-20, 30, 0);
       scene.add(box);
 
       // 平面
-      const planeGeometry = new THREE.PlaneGeometry(10, 10, 5, 5); // (幅, 高さ, 幅,分割数, 高分割数)
+      const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 5, 5); // (幅, 高さ, 幅,分割数, 高分割数)
       const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x0056ff, wireframe: true });
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       plane.position.set(0, 30, 0);
       scene.add(plane);
 
       // 角錐（円錐）
-      const coneGeometry = new THREE.ConeGeometry(5, 10, 16); // (半径, 高さ, 面分割数)
+      const coneGeometry = new THREE.ConeBufferGeometry(5, 10, 16); // (半径, 高さ, 面分割数)
       const coneMaterial = new THREE.MeshBasicMaterial({ color: 0xca25ff, wireframe: true });
       cone = new THREE.Mesh(coneGeometry, coneMaterial);
       cone.position.set(20, 30, 0);
       scene.add(cone);
 
       // 角柱（円柱）
-      const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 10, 16); // (上面半径, 下面半径, 高さ, 面分割数)
+      const cylinderGeometry = new THREE.CylinderBufferGeometry(5, 5, 10, 16); // (上面半径, 下面半径, 高さ, 面分割数)
       const cylinderMaterial = new THREE.MeshBasicMaterial({ color: 0xffff36, wireframe: true });
       cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
       cylinder.position.set(-20, 0, 0);
       scene.add(cylinder);
 
       // 球
-      const sphereGeometry = new THREE.SphereGeometry(5, 32, 16); // (半径, 水平方向分割数, 垂直方向分割数)
+      const sphereGeometry = new THREE.SphereBufferGeometry(5, 32, 16); // (半径, 水平方向分割数, 垂直方向分割数)
       const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x31ff2a, wireframe: true });
       sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       scene.add(sphere);
 
       // トーラス
-      const torusGeometry = new THREE.TorusGeometry(5, 1, 16, 16); // (半径, チューブ半径, 法線方向分割数, 接線方向分割数)
+      const torusGeometry = new THREE.TorusBufferGeometry(5, 1, 16, 16); // (半径, チューブ半径, 法線方向分割数, 接線方向分割数)
       const torusMaterial = new THREE.MeshBasicMaterial({ color: 0x49ffff, wireframe: true });
       torus = new THREE.Mesh(torusGeometry, torusMaterial);
       torus.position.set(20, 0, 0);
       scene.add(torus);
 
       // トーラス結び目
-      const torusKnotGeometry = new THREE.TorusKnotGeometry(5, 1, 100, 16); // (半径, チューブ半径, 接線方向分割数, 法線方向分割数, p, q)
+      const torusKnotGeometry = new THREE.TorusKnotBufferGeometry(5, 1, 100, 16); // (半径, チューブ半径, 接線方向分割数, 法線方向分割数, p, q)
       const torusKnotMaterial = new THREE.MeshBasicMaterial({ color: 0xff7360, wireframe: true });
       torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial);
       torusKnot.position.set(0, -30, 0);
