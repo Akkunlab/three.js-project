@@ -37,20 +37,21 @@
 
       // 文字を作成
       const loader = new THREE.FontLoader();
-			loader.load(fontURL, font => {
-				const mat = new THREE.MeshBasicMaterial({ color: 0x4cff82, side: THREE.DoubleSide });
-				const message = '   Three.js\nHello World';
-				const shapes = font.generateShapes(message, 100);
-				const geometry = new THREE.ShapeGeometry(shapes);
-
-				geometry.computeBoundingBox();
-
-				const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
-
-				geometry.translate(xMid, 0, 0);
-
-				const text = new THREE.Mesh(geometry, mat);
-				scene.add(text);
+      loader.load(fontURL, font => {
+        const mat = new THREE.MeshBasicMaterial({ color: 0x4cff82, side: THREE.DoubleSide });
+        const message = '   Three.js\nHello World';
+        const shapes = font.generateShapes(message, 100);
+        const geometry = new THREE.ShapeGeometry(shapes);
+        
+        geometry.computeBoundingBox();
+        
+        const xMid = - 0.5 * (geometry.boundingBox.max.x - geometry.boundingBox.min.x);
+        
+        geometry.translate(xMid, 0, 0);
+        
+        const text = new THREE.Mesh(geometry, mat);
+        
+        scene.add(text);
       });
     }
 
