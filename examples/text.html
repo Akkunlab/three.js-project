@@ -39,7 +39,7 @@
       const loader = new THREE.FontLoader();
 			loader.load(fontURL, font => {
 				const mat = new THREE.MeshBasicMaterial({ color: 0x4cff82, side: THREE.DoubleSide });
-				const message = '   Three.js\nSimple text.';
+				const message = '   Three.js\nHello World';
 				const shapes = font.generateShapes(message, 100);
 				const geometry = new THREE.ShapeGeometry(shapes);
 
