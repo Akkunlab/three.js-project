@@ -19,7 +19,7 @@
     /* Three.js: 初期化 */
     const initThree = () => {
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0x000010);
+      scene.background = new THREE.Color(0x000003);
       camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 500, 2000);
       camera.position.z = 1000;
 
@@ -46,8 +46,8 @@
         const z = Math.random() * n - n2;
         positions.push(x, y, z);
 
-        const vx = Math.random() * 0.3 + 0.7;
-        const vy = Math.random() * 0.3 + 0.7;
+        const vx = Math.random() * 0.2 + 0.8;
+        const vy = Math.random() * 0.2 + 0.8;
         const vz = 1;
         color.setRGB(vx, vy, vz);
       
