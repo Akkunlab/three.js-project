@@ -33,10 +33,7 @@
 
       // コントローラ
       controls = new FirstPersonControls(camera, renderer.domElement);
-      controls.lookSpeed = 0.1;
-      controls.movementSpeed = 50;
-      controls.noFly = true;
-      controls.lookVertical = false;
+      controls.lookSpeed = 0.05;
 
       // 立方体を作成
       const geometry = new THREE.BoxBufferGeometry();
