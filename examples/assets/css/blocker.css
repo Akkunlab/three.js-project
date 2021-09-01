@@ -14,3 +14,6 @@
   background: rgb(0, 0, 0);
   border: solid 1px #fff;
 }
+.button_start:hover {
+  background: rgb(33, 33, 33);
+}
