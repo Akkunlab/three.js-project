@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>audio_global</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/blocker.css">
+</head>
+
+<body>
+
+  <div id="blocker" class="blocker">
+		<button id="button_start" class="button_start">Play</button>
+	</div>
+
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.132.0';
+
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let sphere;
+    let sound;
+
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      blocker.remove(); // blockerを削除
+
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // 球を作成
+      const sphereGeometry = new THREE.SphereBufferGeometry(0.5, 32, 16);
+      const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x31ff2a, wireframe: true });
+      sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      scene.add(sphere);
+
+      // 音源を作成
+      const listener = new THREE.AudioListener();
+      camera.add(listener);
+
+      sound = new THREE.Audio(listener);
+
+      const audioLoader = new THREE.AudioLoader();
+      audioLoader.load('./assets/ogg/Yayoinosorani.ogg', buffer => {
+      	sound.setBuffer(buffer);
+      	sound.setLoop(true);
+      	sound.setVolume(0.1);
+      	sound.play();
+      });
+
+      animate();
+    }
+
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      const t = Date.now() / 3000;
+      const r = 5.0;
+      const lx = r * Math.cos(t);
+      const lz = r * Math.sin(t);
+      sphere.position.set(lx, 0, lz);
+
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    button_start.addEventListener('click', initThree);
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
+
+</html>
