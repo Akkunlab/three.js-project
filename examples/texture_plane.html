@@ -29,8 +29,9 @@
       document.body.appendChild(renderer.domElement);
 
       // 平面を作成
-      const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 5, 5); // (幅, 高さ, 幅,分割数, 高分割数)
-      const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x0056ff, wireframe: true });
+      const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 5, 5);
+      const planeTexture = new THREE.TextureLoader().load('./assets/textures/sand.jpg');
+      const planeMaterial = new THREE.MeshBasicMaterial({ map: planeTexture, side: THREE.DoubleSide });
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       plane.rotation.set(Math.PI / 2, 0, 0);
       scene.add(plane);
