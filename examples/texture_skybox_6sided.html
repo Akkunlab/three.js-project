@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>texture_skybox_6sided</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
+
+<body>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.132.0';
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.0/examples/jsm/controls/OrbitControls.js';
+
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let skybox;
+    let controls;
+
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
+      camera.position.set(0, 5, 10);
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // コントローラ
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.2;
+      controls.update();
+
+      // skybox
+			const path = './assets/textures/skybox_6sided_';
+			const format = '.png';
+			const urls = [
+				path + 'px' + format, path + 'nx' + format,
+				path + 'py' + format, path + 'ny' + format,
+				path + 'pz' + format, path + 'nz' + format
+			];
+      /* Title: aosystem SKYBOX */
+      /* URL: https://ao-system.net/skybox/ */
+			const texture = new THREE.CubeTextureLoader().load(urls);
+      scene.background = texture;
+    }
+
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
+
+</html>
