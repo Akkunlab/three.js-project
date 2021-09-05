@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>loader_vrm</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
+
+<body>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.132.0';
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.0/examples/jsm/controls/OrbitControls.js';
+    import { VRMLoader } from 'https://cdn.skypack.dev/three@0.132.0/examples/jsm/loaders/VRMLoader.js';
+
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let cube;
+    let controls;
+
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 1.2, -1.5);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // コントローラ
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.2;
+      controls.target.set(0, 1, 0);
+      controls.update();
+
+      // モデルを作成
+			const loader = new VRMLoader();
+			loader.load('./assets/models/AliciaSolid.vrm', vrm => {
+				vrm.scene.traverse(object => {
+					if (object.material) {
+						if (Array.isArray(object.material)) {
+							for (let i = 0, il = object.material.length; i < il; i ++) {
+								const material = new THREE.MeshBasicMaterial();
+								THREE.Material.prototype.copy.call(material, object.material[i]);
+								material.color.copy(object.material[i].color);
+								material.map = object.material[i].map;
+								object.material[i] = material;
+							}
+						} else {
+							const material = new THREE.MeshBasicMaterial();
+							THREE.Material.prototype.copy.call(material, object.material);
+							material.color.copy(object.material.color);
+							material.map = object.material.map;
+							object.material = material;
+						}
+					}
+				});
+				scene.add(vrm.scene);
+			});
+    }
+
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
+
+</html>
