@@ -40,6 +40,8 @@
       // モデルを作成
 			const loader = new VRMLoader();
 			loader.load('./assets/models/AliciaSolid.vrm', vrm => {
+        /* Title: アリシア・ソリッド */
+        /* URL: https://3d.nicovideo.jp/alicia/ */
 				vrm.scene.traverse(object => {
 					if (object.material) {
 						if (Array.isArray(object.material)) {
@@ -59,6 +61,7 @@
 						}
 					}
 				});
+
 				scene.add(vrm.scene);
 			});
     }
