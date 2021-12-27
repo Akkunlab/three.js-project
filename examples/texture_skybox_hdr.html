@@ -10,9 +10,9 @@
 
 <body>
   <script type="module">
-    import * as THREE from 'https://cdn.skypack.dev/three@0.133.1';
-    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.133.1/examples/jsm/controls/OrbitControls.js';
-    import { RGBELoader } from 'https://cdn.skypack.dev/three@0.133.1/examples/jsm/loaders/RGBELoader.js';
+    import * as THREE from 'https://cdn.skypack.dev/three@0.136.0';
+    import { OrbitControls } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js';
+    import { RGBELoader } from 'https://cdn.skypack.dev/three@0.136.0/examples/jsm/loaders/RGBELoader.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -44,7 +44,6 @@
 
       // skybox
       new RGBELoader()
-				.setDataType(THREE.UnsignedByteType)
 				.load('./assets/textures/skybox_hdr.hdr', (skyboxTexture) => {
           /* Title: Skybox Series Free */
           /* URL: https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633 */
