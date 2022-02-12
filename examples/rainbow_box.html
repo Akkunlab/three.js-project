@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>rainbow_box</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
+
+<body>
+  <script type="module">
+    import * as THREE from 'https://cdn.skypack.dev/three@0.133.1';
+    import { Lut } from 'https://cdn.skypack.dev/three@0.133.1/examples/jsm/math/Lut.js';
+
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let cube, lut;
+
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
+
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // 色設定
+      lut = new Lut('rainbow', 512);
+
+      // 立方体を作成
+      const cubeGeometry = new THREE.BoxBufferGeometry();
+      const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+      scene.add(cube);
+    }
+
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      const t = Date.now() / 5000;
+      const cos = Math.abs(Math.cos(t));
+      const color = lut.getColor(cos);
+
+      cube.material.color.set(color);
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+    
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
+
+</html>
