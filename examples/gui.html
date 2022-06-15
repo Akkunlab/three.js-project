@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>gui</title>
-    <link rel="stylesheet" href="./assets/css/common.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>gui</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
 
-  <body>
+<body>
 
-    <!-- Import maps polyfill -->
-    <!-- Remove this when import maps will be widely supported -->
-    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <!-- Import maps polyfill -->
+  <!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
-    <script type="importmap">
+	<script type="importmap">
     {
       "imports": {
         "three": "https://unpkg.com/three@0.141.0/build/three.module.js",
@@ -23,73 +23,73 @@
     }
   </script>
 
-    <script type="module">
-      import * as THREE from 'three';
-      import GUI from 'gui';
+  <script type="module">
+    import * as THREE from 'three';
+    import GUI from 'gui';
 
-      /* グローバル変数 */
-      let scene, camera, renderer;
-      let cube;
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let cube;
 
-      /* Three.js: 初期化 */
-      const initThree = () => {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 5;
 
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-        // 立方体を作成
-        const geometry = new THREE.BoxBufferGeometry();
-        const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-        cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+      // 立方体を作成
+      const geometry = new THREE.BoxBufferGeometry();
+      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
 
-        // GUI設定
-        const gui = new GUI();
-        const params = {
-          color: 0x00ff00,
-          scale: 1
-        };
-
-        // 立方体の色変更
-        gui.addColor(params, 'color').onChange(() => {
-          cube.material.color.set(params.color);
-        });
-
-        // 立方体の大きさを変更
-        gui.add(params, 'scale', 1.0, 4.0).onChange(() => {
-          cube.scale.set(params.scale, params.scale, params.scale);
-        });
-      }
-
-      /* Three.js: アニメーション */
-      const animate = () => {
-        requestAnimationFrame(animate);
-
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-
-        renderer.render(scene, camera);
+      // GUI設定
+      const gui = new GUI();
+      const params = {
+        color: 0x00ff00,
+        scale: 1
       };
 
-      /* Three.js: リサイズ */
-      const onWindowResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
+      // 立方体の色変更
+      gui.addColor(params, 'color').onChange(() => {
+        cube.material.color.set(params.color);
+      });
 
-      initThree();
-      animate();
+      // 立方体の大きさを変更
+      gui.add(params, 'scale', 1.0, 4.0).onChange(() => {
+        cube.scale.set(params.scale, params.scale, params.scale);
+      });
+    }
 
-      window.addEventListener('resize', onWindowResize);
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+    
+      cube.rotation.x += 0.01;
+      cube.rotation.y += 0.01;
+    
+      renderer.render(scene, camera);
+    };
 
-    </script>
-  </body>
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
 
 </html>

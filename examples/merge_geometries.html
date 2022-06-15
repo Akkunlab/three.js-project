@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>merge_geometries</title>
-    <link rel="stylesheet" href="./assets/css/common.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>merge_geometries</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
 
-  <body>
+<body>
 
-    <!-- Import maps polyfill -->
-    <!-- Remove this when import maps will be widely supported -->
-    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <!-- Import maps polyfill -->
+	<!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
-    <script type="importmap">
+	<script type="importmap">
     {
       "imports": {
         "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
@@ -22,76 +22,76 @@
     }
   </script>
 
-    <script type="module">
-      import * as THREE from 'three';
-      import { mergeBufferGeometries } from 'https://unpkg.com/three@0.141.0/examples/jsm/utils/BufferGeometryUtils.js';
+  <script type="module">
+    import * as THREE from 'three';
+    import { mergeBufferGeometries } from 'https://unpkg.com/three@0.141.0/examples/jsm/utils/BufferGeometryUtils.js';
 
-      /* グローバル変数 */
-      let scene, camera, renderer;
+    /* グローバル変数 */
+    let scene, camera, renderer;
 
-      /* Three.js: 初期化 */
-      const initThree = () => {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 0, 70);
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 0, 70);
 
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-        createObjects();
-      }
+      createObjects();
+    }
 
-      /* Three.js: オブジェクト作成 */
-      const createObjects = () => {
-        const length = 10;
-        const boxes = [];
+    /* Three.js: オブジェクト作成 */
+    const createObjects = () => {
+      const length = 10;
+      const boxes = [];
 
-        for (let i = 0; i < length; i++) {
-          for (let j = 0; j < length; j++) {
-            for (let k = 0; k < length; k++) {
-              const geometryBox = new THREE.BoxBufferGeometry();
-              const geometryTranslated = geometryBox.translate(
-                3 * (i - length / 2),
-                3 * (j - length / 2),
-                3 * (k - length / 2)
-              );
-              boxes.push(geometryTranslated);
-            }
+      for (let i = 0; i < length; i++) {
+        for (let j = 0; j < length; j++) {
+          for (let k = 0; k < length; k++) {
+            const geometryBox = new THREE.BoxBufferGeometry();
+            const geometryTranslated = geometryBox.translate(
+              3 * (i - length / 2),
+              3 * (j - length / 2),
+              3 * (k - length / 2)
+            );
+            boxes.push(geometryTranslated);
           }
         }
-
-        const geometry = mergeBufferGeometries(boxes);
-        const material = new THREE.MeshNormalMaterial();
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-      };
-
-      /* Three.js: アニメーション */
-      const animate = () => {
-        requestAnimationFrame(animate);
-
-        scene.rotation.x += Math.PI / 180;
-        scene.rotation.y += Math.PI / 180;
-
-        renderer.render(scene, camera);
-      };
-
-      /* Three.js: リサイズ */
-      const onWindowResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
       }
 
-      initThree();
-      animate();
+      const geometry = mergeBufferGeometries(boxes);
+      const material = new THREE.MeshNormalMaterial();
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+    };
 
-      window.addEventListener('resize', onWindowResize);
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
 
-    </script>
-  </body>
+      scene.rotation.x += Math.PI / 180;
+      scene.rotation.y += Math.PI / 180;
+
+      renderer.render(scene, camera);
+    };
+
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    initThree();
+    animate();
+
+    window.addEventListener('resize', onWindowResize);
+
+  </script>
+</body>
 
 </html>

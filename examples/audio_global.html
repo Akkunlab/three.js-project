@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>audio_global</title>
-    <link rel="stylesheet" href="./assets/css/common.css">
-    <link rel="stylesheet" href="./assets/css/blocker.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>audio_global</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+  <link rel="stylesheet" href="./assets/css/blocker.css">
+</head>
 
-  <body>
+<body>
 
-    <div id="blocker" class="blocker">
-      <button id="button_start" class="button_start">Play</button>
-    </div>
+  <div id="blocker" class="blocker">
+    <button id="button_start" class="button_start">Play</button>
+  </div>
 
-    <!-- Import maps polyfill -->
-    <!-- Remove this when import maps will be widely supported -->
-    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <!-- Import maps polyfill -->
+  <!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
-    <script type="importmap">
+  <script type="importmap">
     {
       "imports": {
         "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
@@ -27,76 +27,76 @@
     }
   </script>
 
-    <script type="module">
-      import * as THREE from 'three';
+  <script type="module">
+    import * as THREE from 'three';
 
-      /* グローバル変数 */
-      let scene, camera, renderer;
-      let sphere;
-      let sound;
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let sphere;
+    let sound;
 
-      /* Three.js: 初期化 */
-      const initThree = () => {
-        blocker.remove(); // blockerを削除
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      blocker.remove(); // blockerを削除
 
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-        // 球を作成
-        const sphereGeometry = new THREE.SphereBufferGeometry(0.5, 32, 16);
-        const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x31ff2a, wireframe: true });
-        sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        scene.add(sphere);
+      // 球を作成
+      const sphereGeometry = new THREE.SphereBufferGeometry(0.5, 32, 16);
+      const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x31ff2a, wireframe: true });
+      sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+      scene.add(sphere);
 
-        // 音源を作成
-        const listener = new THREE.AudioListener();
-        camera.add(listener);
+      // 音源を作成
+      const listener = new THREE.AudioListener();
+      camera.add(listener);
 
-        sound = new THREE.Audio(listener);
+      sound = new THREE.Audio(listener);
 
-        const audioLoader = new THREE.AudioLoader();
-        /* Title: 弥生の空に */
-        /* URL: https://amachamusic.chagasi.com/music_yayoinosorani.html */
-        audioLoader.load('./assets/ogg/Yayoinosorani.ogg', buffer => {
-          sound.setBuffer(buffer);
-          sound.setLoop(true);
-          sound.setVolume(0.1);
-          sound.play();
-        });
+      const audioLoader = new THREE.AudioLoader();
+      /* Title: 弥生の空に */
+      /* URL: https://amachamusic.chagasi.com/music_yayoinosorani.html */
+      audioLoader.load('./assets/ogg/Yayoinosorani.ogg', buffer => {
+      	sound.setBuffer(buffer);
+      	sound.setLoop(true);
+      	sound.setVolume(0.1);
+      	sound.play();
+      });
 
-        animate();
-      }
+      animate();
+    }
 
-      /* Three.js: アニメーション */
-      const animate = () => {
-        requestAnimationFrame(animate);
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
 
-        const t = Date.now() / 3000;
-        const r = 5.0;
-        const lx = r * Math.cos(t);
-        const lz = r * Math.sin(t);
-        sphere.position.set(lx, 0, lz);
+      const t = Date.now() / 3000;
+      const r = 5.0;
+      const lx = r * Math.cos(t);
+      const lz = r * Math.sin(t);
+      sphere.position.set(lx, 0, lz);
 
-        renderer.render(scene, camera);
-      };
+      renderer.render(scene, camera);
+    };
 
-      /* Three.js: リサイズ */
-      const onWindowResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-      button_start.addEventListener('click', initThree);
-      window.addEventListener('resize', onWindowResize);
+    button_start.addEventListener('click', initThree);
+    window.addEventListener('resize', onWindowResize);
 
-    </script>
-  </body>
+  </script>
+</body>
 
 </html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="ja">
 
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>shaders_ocean</title>
-    <link rel="stylesheet" href="./assets/css/common.css">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title>shaders_ocean</title>
+  <link rel="stylesheet" href="./assets/css/common.css">
+</head>
 
-  <body>
+<body>
 
-    <!-- Import maps polyfill -->
-    <!-- Remove this when import maps will be widely supported -->
-    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+  <!-- Import maps polyfill -->
+	<!-- Remove this when import maps will be widely supported -->
+  <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
-    <script type="importmap">
+	<script type="importmap">
     {
       "imports": {
         "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
@@ -22,92 +22,92 @@
     }
   </script>
 
-    <script type="module">
-      import * as THREE from 'three';
-      import { OrbitControls } from 'https://unpkg.com/three@0.141.0/examples/jsm/controls/OrbitControls.js';
-      import { Water } from 'https://unpkg.com/three@0.141.0/examples/jsm/objects/Water.js';
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'https://unpkg.com/three@0.141.0/examples/jsm/controls/OrbitControls.js';
+    import { Water } from 'https://unpkg.com/three@0.141.0/examples/jsm/objects/Water.js';
 
-      /* グローバル変数 */
-      let scene, camera, renderer;
-      let skybox, water;
-      let controls;
+    /* グローバル変数 */
+    let scene, camera, renderer;
+    let skybox, water;
+    let controls;
 
-      /* Three.js: 初期化 */
-      const initThree = () => {
-        scene = new THREE.Scene();
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
-        camera.position.x = -450;
+    /* Three.js: 初期化 */
+    const initThree = () => {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 4000);
+      camera.position.x = -450;
 
-        renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
 
-        // コントローラ
-        controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.2;
-        controls.minDistance = 40.0;
-        controls.maxDistance = 200.0;
-        controls.maxPolarAngle = Math.PI * 0.495;
-        controls.target.set(0, 10, 0);
-        controls.update();
+      // コントローラ
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.2;
+      controls.minDistance = 40.0;
+			controls.maxDistance = 200.0;
+      controls.maxPolarAngle = Math.PI * 0.495;
+			controls.target.set(0, 10, 0);
+      controls.update();
 
-        // skybox
-        const skyboxGeometry = new THREE.SphereBufferGeometry(3000, 32, 16);
-        const skyboxTexture = new THREE.TextureLoader().load('./assets/textures/skybox_2.png');
-        /* Title: AllSky Free - 10 Sky / Skybox Set */
-        /* URL: https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014 */
-        const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.DoubleSide });
-        skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
-        scene.add(skybox);
+      // skybox
+      const skyboxGeometry = new THREE.SphereBufferGeometry(3000, 32, 16);
+      const skyboxTexture = new THREE.TextureLoader().load('./assets/textures/skybox_2.png');
+      /* Title: AllSky Free - 10 Sky / Skybox Set */
+      /* URL: https://assetstore.unity.com/packages/2d/textures-materials/sky/allsky-free-10-sky-skybox-set-146014 */
+      const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.DoubleSide });
+      skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+      scene.add(skybox);
 
-        // water
-        const waterGeometry = new THREE.PlaneBufferGeometry(6000, 6000);
-        const waterTexture = new THREE.TextureLoader().load('./assets/textures/waternormals.jpg', texture => {
-          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-        });
+      // water
+      const waterGeometry = new THREE.PlaneBufferGeometry(6000, 6000);
+      const waterTexture = new THREE.TextureLoader().load('./assets/textures/waternormals.jpg', texture => {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      });
+      
+      water = new Water(
+        waterGeometry,
+        {
+          textureWidth: 512,
+          textureHeight: 512,
+          waterNormals: waterTexture,
+          sunDirection: new THREE.Vector3(),
+          sunColor: 0xffffff,
+          waterColor: 0x85baef,
+          distortionScale: 3.7,
+          fog: scene.fog !== undefined
+        }
+      );
 
-        water = new Water(
-          waterGeometry,
-          {
-            textureWidth: 512,
-            textureHeight: 512,
-            waterNormals: waterTexture,
-            sunDirection: new THREE.Vector3(),
-            sunColor: 0xffffff,
-            waterColor: 0x85baef,
-            distortionScale: 3.7,
-            fog: scene.fog !== undefined
-          }
-        );
+      water.rotation.x = -Math.PI / 2;
+      scene.add(water);
+    }
 
-        water.rotation.x = -Math.PI / 2;
-        scene.add(water);
-      }
+    /* Three.js: アニメーション */
+    const animate = () => {
+      requestAnimationFrame(animate);
+      water.material.uniforms['time'].value += 1.0 / 60.0;
+      controls.update();
+      renderer.render(scene, camera);
+    };
 
-      /* Three.js: アニメーション */
-      const animate = () => {
-        requestAnimationFrame(animate);
-        water.material.uniforms['time'].value += 1.0 / 60.0;
-        controls.update();
-        renderer.render(scene, camera);
-      };
+    /* Three.js: リサイズ */
+    const onWindowResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
-      /* Three.js: リサイズ */
-      const onWindowResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
+    initThree();
+    animate();
 
-      initThree();
-      animate();
+    window.addEventListener('resize', onWindowResize);
 
-      window.addEventListener('resize', onWindowResize);
-
-    </script>
-  </body>
+  </script>
+</body>
 
 </html>
