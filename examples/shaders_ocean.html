@@ -11,10 +11,10 @@
 <body>
 
   <!-- Import maps polyfill -->
-	<!-- Remove this when import maps will be widely supported -->
+  <!-- Remove this when import maps will be widely supported -->
   <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
 
-	<script type="importmap">
+  <script type="importmap">
     {
       "imports": {
         "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
@@ -48,9 +48,9 @@
       controls.enableDamping = true;
       controls.dampingFactor = 0.2;
       controls.minDistance = 40.0;
-			controls.maxDistance = 200.0;
+      controls.maxDistance = 200.0;
       controls.maxPolarAngle = Math.PI * 0.495;
-			controls.target.set(0, 10, 0);
+      controls.target.set(0, 10, 0);
       controls.update();
 
       // skybox
