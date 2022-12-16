@@ -17,15 +17,15 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
 
   <script type="module">
     import * as THREE from 'three';
-    import { OrbitControls } from 'https://unpkg.com/three@0.141.0/examples/jsm/controls/OrbitControls.js';
-    import { RGBELoader } from 'https://unpkg.com/three@0.141.0/examples/jsm/loaders/RGBELoader.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.147.0/examples/jsm/controls/OrbitControls.js';
+    import { RGBELoader } from 'https://unpkg.com/three@0.147.0/examples/jsm/loaders/RGBELoader.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -60,7 +60,7 @@
         .load('./assets/textures/skybox_hdr.hdr', (skyboxTexture) => {
           /* Title: Skybox Series Free */
           /* URL: https://assetstore.unity.com/packages/2d/textures-materials/sky/skybox-series-free-103633 */
-          const skyboxGeometry = new THREE.SphereBufferGeometry(3000, 32, 16);
+          const skyboxGeometry = new THREE.SphereGeometry(3000, 32, 16);
           const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture, side: THREE.DoubleSide });
           skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
           scene.add(skybox);

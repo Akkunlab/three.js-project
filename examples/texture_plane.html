@@ -17,7 +17,7 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
@@ -42,7 +42,7 @@
       document.body.appendChild(renderer.domElement);
 
       // 平面を作成
-      const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 5, 5);
+      const planeGeometry = new THREE.PlaneGeometry(10, 10, 5, 5);
       const planeTexture = new THREE.TextureLoader().load('./assets/textures/sand.jpg');
       const planeMaterial = new THREE.MeshBasicMaterial({ map: planeTexture, side: THREE.DoubleSide });
       plane = new THREE.Mesh(planeGeometry, planeMaterial);

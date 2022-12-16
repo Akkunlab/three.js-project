@@ -28,14 +28,14 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
 
   <script type="module">
     import * as THREE from 'three';
-    import { OrbitControls } from 'https://unpkg.com/three@0.141.0/examples/jsm/controls/OrbitControls.js';
+    import { OrbitControls } from 'https://unpkg.com/three@0.147.0/examples/jsm/controls/OrbitControls.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -64,7 +64,7 @@
       // 平面を作成
       video.play();
       const screenTexture = new THREE.VideoTexture(video);
-      const screenGeometry = new THREE.PlaneBufferGeometry(5 * video.videoWidth / video.videoHeight, 5);
+      const screenGeometry = new THREE.PlaneGeometry(5 * video.videoWidth / video.videoHeight, 5);
       const screenMaterial = new THREE.MeshBasicMaterial({ map: screenTexture, side: THREE.DoubleSide });
       screen = new THREE.Mesh(screenGeometry, screenMaterial);
       scene.add(screen);

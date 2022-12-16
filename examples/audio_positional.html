@@ -22,7 +22,7 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
@@ -48,7 +48,7 @@
       document.body.appendChild(renderer.domElement);
 
       // 球を作成
-      const sphereGeometry = new THREE.SphereBufferGeometry(0.5, 32, 16);
+      const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
       const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x31ff2a, wireframe: true });
       sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       scene.add(sphere);

@@ -17,14 +17,14 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
 
   <script type="module">
     import * as THREE from 'three';
-    import { Lut } from 'https://unpkg.com/three@0.141.0/examples/jsm/math/Lut.js';
+    import { Lut } from 'https://unpkg.com/three@0.147.0/examples/jsm/math/Lut.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -45,7 +45,7 @@
       lut = new Lut('rainbow', 512);
 
       // 立方体を作成
-      const cubeGeometry = new THREE.BoxBufferGeometry();
+      const cubeGeometry = new THREE.BoxGeometry();
       const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
       cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
       scene.add(cube);

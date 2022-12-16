@@ -17,14 +17,14 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
 
   <script type="module">
     import * as THREE from 'three';
-    import { FirstPersonControls } from 'https://unpkg.com/three@0.141.0/examples/jsm/controls/FirstPersonControls.js';
+    import { FirstPersonControls } from 'https://unpkg.com/three@0.147.0/examples/jsm/controls/FirstPersonControls.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -49,7 +49,7 @@
       controls.lookSpeed = 0.05;
 
       // 立方体を作成
-      const geometry = new THREE.BoxBufferGeometry();
+      const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
       cube = new THREE.Mesh(geometry, material);
       scene.add(cube);

@@ -17,7 +17,7 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
@@ -51,14 +51,14 @@
       scene.add(lightHelper);
 
       // 球
-      const sphereGeometry = new THREE.SphereBufferGeometry(1, 32, 16);
+      const sphereGeometry = new THREE.SphereGeometry(1, 32, 16);
       const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x31ff2a, roughness: 0.0 });
       sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       sphere.position.set(0, 1, 0);
       scene.add(sphere);
 
       // 平面
-      const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 5, 5);
+      const planeGeometry = new THREE.PlaneGeometry(10, 10, 5, 5);
       const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide, roughness: 0.0 });
       plane = new THREE.Mesh(planeGeometry, planeMaterial);
       plane.rotation.set(Math.PI / 2, 0, 0); 

@@ -17,14 +17,14 @@
   <script type="importmap">
     {
       "imports": {
-        "three": "https://unpkg.com/three@0.141.0/build/three.module.js"
+        "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
       }
     }
   </script>
 
   <script type="module">
     import * as THREE from 'three';
-    import { mergeBufferGeometries } from 'https://unpkg.com/three@0.141.0/examples/jsm/utils/BufferGeometryUtils.js';
+    import { mergeBufferGeometries } from 'https://unpkg.com/three@0.147.0/examples/jsm/utils/BufferGeometryUtils.js';
 
     /* グローバル変数 */
     let scene, camera, renderer;
@@ -51,7 +51,7 @@
       for (let i = 0; i < length; i++) {
         for (let j = 0; j < length; j++) {
           for (let k = 0; k < length; k++) {
-            const geometryBox = new THREE.BoxBufferGeometry();
+            const geometryBox = new THREE.BoxGeometry();
             const geometryTranslated = geometryBox.translate(
               3 * (i - length / 2),
               3 * (j - length / 2),
